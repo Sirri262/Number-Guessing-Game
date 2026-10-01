@@ -2,44 +2,48 @@ import random
 
 def play_game():
     number = random.randint(1, 10)
-    gues = 0
+    guess = 0
     chances = 3
-    gues_counter = []
+    guessed_numbers = []
 
-    while gues != number and len(gues_counter) < chances:
+    while guess != number and len(guessed_numbers) < chances:
         try:
-            gues = int(input(f"You have {chances - len(gues_counter)} chances to gues: "))
+            guess = int(input(f"You have {chances - len(guessed_numbers)} chances left. Enter your guess: "))
 
-            if gues < 1 or gues > 10:
-                print("Gues between 1 to 10")
-            elif gues in gues_counter:
+            if guess < 1 or guess > 10:
+                print("Guess a number between 1 and 10")
+            elif guess in guessed_numbers:
                 print("You already tried this number")
             else:
-                gues_counter.append(gues)
+                guessed_numbers.append(guess)
 
-                if number > gues:
-                    if chances - len(gues_counter) > 0:
-                        print("Try to with big number")
-                elif number < gues:
-                    if chances - len(gues_counter) > 0:
-                        print("Try to with small number")
+                if number > guess:
+                    if chances - len(guessed_numbers) > 0:
+                        print("Try a bigger number")
+                elif number < guess:
+                    if chances - len(guessed_numbers) > 0:
+                        print("Try a smaller number")
                 else:
-                    print("Congratulations you gussed!")
-                    print(f"{len(gues_counter)} times you was tested.")
+                    print("Congratulations! You guessed it!")
+                    print(f"You guessed it in {len(guessed_numbers)} attempts")
 
         except ValueError:
-            print("Please enter number!")
+            print("Please enter a number!")
 
-    if gues != number:
-        print("Your chance is finish!!")
-        print(f"Number was:{number}")
+    if guess != number:
+        print("You are out of chances!")
+        print(f"The number was: {number}")
 
-    print(f"You guessed numbers: {gues_counter}")
+    print(f"You guessed numbers: {guessed_numbers}")
 
 while True:
     play_game()
  
-    again = input("Would you like to play again? (y/n): ").lower()
+    again = input("Would you like to play again? (yes/no): ").lower()
     
-    if again != "y":
+    while again != "yes" and again != "no":
+        again = input("Please enter only yes or no: ").lower()
+        
+    if again == "no":
         break
+        
